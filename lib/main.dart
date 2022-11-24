@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:taxdb_loader/listile_item.dart';
+import 'package:taxdb_loader/drawer/custom_drawer.dart';
+import 'package:taxdb_loader/drawer/listile_item.dart';
 import 'package:taxdb_loader/provider_manager.dart';
 
 void main() {
@@ -45,18 +46,7 @@ class MainApp extends StatelessWidget {
           title: const Text("Taxtis"),
           centerTitle: true,
         ),
-        endDrawer: Drawer(
-          width: MediaQuery.of(context).size.width * 0.5,
-          child: ListView(
-            children: List.generate(
-                10,
-                (index) => ListTile(
-                      title: Center(child: text_list[index]),
-                      leading: index == 0 ? null : icon_list[index],
-                      onTap: index == 0 ? null : (() {}),
-                    )),
-          ),
-        ),
+        endDrawer: Custom_Drawer(context),
         body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Text('_countProvider.count.toString()'),
