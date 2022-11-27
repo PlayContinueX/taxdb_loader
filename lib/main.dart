@@ -53,11 +53,7 @@ class MainApp extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Text('_countProvider.count.toString()'),
             ElevatedButton(onPressed: () {}, child: const Text('UP')),
-            ElevatedButton(
-                onPressed: () {
-                  print(bussiness_category[0]['midCategory']);
-                },
-                child: const Text('Down')),
+            ElevatedButton(onPressed: () {}, child: const Text('Down')),
           ]),
         ),
       ),
