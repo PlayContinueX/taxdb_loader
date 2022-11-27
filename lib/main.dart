@@ -1,15 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:taxdb_loader/drawer/bussiness_category.dart';
 import 'package:taxdb_loader/drawer/custom_drawer.dart';
-import 'package:taxdb_loader/drawer/listile_item.dart';
-import 'package:taxdb_loader/provider_manager.dart';
 
-void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => ThemeViewModel()),
-  ], child: const App()));
+bool? isDarkMode = false;
+GetStorage getStoreage = GetStorage();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  isDarkMode = getStoreage.read('isDarkMode');
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
@@ -17,20 +18,20 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var viewmodel = context.watch<ThemeViewModel>();
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      builder: (context, child) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: viewmodel.seedColor,
-              brightness: viewmodel.brightness,
-            )),
-        home: const MainApp(),
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: AppGlobalVariable.navigatorState,
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
       ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        primaryColor: Colors.red,
+      ),
+      themeMode: isDarkMode == true ? ThemeMode.dark : ThemeMode.light,
+      home: const MainApp(),
     );
   }
 }
@@ -46,12 +47,17 @@ class MainApp extends StatelessWidget {
           title: const Text("Taxtis"),
           centerTitle: true,
         ),
-        endDrawer: Custom_Drawer(context),
+        drawer: CustomDrawer(),
+        endDrawer: CustomDrawer(),
         body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Text('_countProvider.count.toString()'),
             ElevatedButton(onPressed: () {}, child: const Text('UP')),
-            ElevatedButton(onPressed: () {}, child: const Text('Down')),
+            ElevatedButton(
+                onPressed: () {
+                  print(bussiness_category[0]['midCategory']);
+                },
+                child: const Text('Down')),
           ]),
         ),
       ),
@@ -59,50 +65,7 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class ThemeAppBar {
-  static AppBar getAppBar(BuildContext context) {
-    var viewmodel = context.watch<ThemeViewModel>();
-    return AppBar(
-      actions: [
-        Row(
-          children: kThemeSeedColors
-              .map((e) => _buildSeedColorButton(e, context))
-              .toList(),
-        ),
-        const SizedBox(width: 10),
-        CupertinoSwitch(
-          value: viewmodel.brightness == Brightness.light,
-          onChanged: (value) {
-            viewmodel.brightness = value ? Brightness.light : Brightness.dark;
-          },
-          activeColor: Theme.of(context).colorScheme.primary,
-          trackColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-        ),
-        const SizedBox(width: 10),
-      ],
-    );
-  }
-
-  static Widget _buildSeedColorButton(Color color, BuildContext context) {
-    var viewmodel = context.watch<ThemeViewModel>();
-    return GestureDetector(
-      onTap: () {
-        viewmodel.seedColorIndex = kThemeSeedColors.indexOf(color);
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(left: 4.0),
-        child: CircleAvatar(
-          radius: 16,
-          backgroundColor: color,
-          child: viewmodel.seedColor == color
-              ? const Icon(
-                  Icons.check,
-                  size: 16.0,
-                  color: Colors.white,
-                )
-              : null,
-        ),
-      ),
-    );
-  }
+class AppGlobalVariable {
+  static final GlobalKey<NavigatorState> navigatorState =
+      GlobalKey<NavigatorState>();
 }
