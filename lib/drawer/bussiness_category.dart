@@ -1,6 +1,6 @@
 List<Map<String, dynamic>> bussiness_category = [
   {
-    'largeCategory': '건강',
+    'largeCategory': '건강123',
     'midCategory': [
       {
         '의료기관': [
