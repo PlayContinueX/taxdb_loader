@@ -1,9 +1,10 @@
-List<Map<String, dynamic>> bussiness_category = [
+List<Map<String, dynamic>> db_category = [
   {
-    'largeCategory': '건강123',
-    'midCategory': [
+    'lv1_category': '건강',
+    'lv1_category_list': [
       {
-        '의료기관': [
+        'lv2_category': '의료기관',
+        'lv2_category_list': [
           '병원',
           '부속의료기관',
           '산후조리업',
@@ -12,19 +13,56 @@ List<Map<String, dynamic>> bussiness_category = [
           '응급환자이송업',
           '의료법인',
           '의료유사업',
-          '의원'
+          '의원',
         ]
       },
       {
-        '의료기기': [
+        'lv2_category': '의료기기',
+        'lv2_category_list': [
           '안경업',
           '의료기기수리업',
           '의료기기판매(임대)업',
           '치과기공소',
         ]
       },
-    ],
+    ]
   },
+  {
+    'lv1_category': '동물',
+    'lv1_category_list': [
+      {
+        'lv2_category': '동물',
+        'lv2_category_list': [
+          '동물미용업',
+          '동물병원',
+          '동물생산업',
+          '동물수입업',
+          '동물약국',
+          '동물용의료용구판매업',
+          '동물용의약품도매상',
+          '동물운송업',
+          '동물위탁관리업',
+          '동물장묘업',
+          '동물전시업',
+          '동물판매업',
+        ]
+      },
+      {
+        'lv2_category': '축산',
+        'lv2_category_list': [
+          '가축사육업',
+          '가축인공수정소',
+          '도축업',
+          '부화업',
+          '사료제조업',
+          '종축업',
+        ]
+      },
+    ],
+  }
+];
+
+List<Map<String, dynamic>> bussiness_category1 = [
   {
     '동물': [
       {
