@@ -10,7 +10,6 @@ Widget MainContents() {
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Padding(padding: EdgeInsets.only(top: 10)),
           MainPageContainerRowSet(
             width: const [0.15, 0.8],
             height: 0.05,

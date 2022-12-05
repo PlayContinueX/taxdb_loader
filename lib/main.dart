@@ -59,21 +59,30 @@ class MainApp extends StatelessWidget {
         body: Column(
           children: [
             ButtonBar(
-              alignment: MainAxisAlignment.start,
+              alignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   onPressed: () {},
-                  child: Icon(Icons.arrow_back_ios),
                   style: ButtonStyle(
+                      foregroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.white),
                       backgroundColor: MaterialStateColor.resolveWith(
                           (states) => Theme.of(context).primaryColor)),
+                  child: const Icon(Icons.arrow_back_ios),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: const Text('1/23'),
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Icon(Icons.arrow_forward_ios),
                   style: ButtonStyle(
+                      foregroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.white),
                       backgroundColor: MaterialStateColor.resolveWith(
                           (states) => Theme.of(context).primaryColor)),
+                  child: const Icon(Icons.arrow_forward_ios),
                 )
               ],
             ),

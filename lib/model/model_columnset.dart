@@ -5,16 +5,16 @@ import 'package:url_launcher/url_launcher.dart';
 class MainPageContainerColumnSet extends StatelessWidget {
   const MainPageContainerColumnSet({
     super.key,
-    required this.l_bordersideAll,
-    required this.r_bordersideAll,
+    required this.top_bordersideAll,
+    required this.bottom_bordersideAll,
     required this.width,
     required this.height,
     required this.contentName,
     this.contentWidget,
   });
 
-  final List<bool> l_bordersideAll;
-  final List<bool> r_bordersideAll;
+  final List<bool> top_bordersideAll;
+  final List<bool> bottom_bordersideAll;
   final double width;
   final List<double> height;
   final String contentName;
@@ -32,16 +32,16 @@ class MainPageContainerColumnSet extends StatelessWidget {
               color: Theme.of(context).focusColor,
               border: Border(
                 left: BorderSide(
-                    width: l_bordersideAll[0] ? 1 : 0,
+                    width: top_bordersideAll[0] ? 1 : 0,
                     color: Theme.of(context).primaryColor),
                 right: BorderSide(
-                    width: l_bordersideAll[1] ? 1 : 0,
+                    width: top_bordersideAll[1] ? 1 : 0,
                     color: Theme.of(context).primaryColor),
                 top: BorderSide(
-                    width: l_bordersideAll[2] ? 1 : 0,
+                    width: top_bordersideAll[2] ? 1 : 0,
                     color: Theme.of(context).primaryColor),
                 bottom: BorderSide(
-                    width: l_bordersideAll[3] ? 1 : 0,
+                    width: top_bordersideAll[3] ? 1 : 0,
                     color: Theme.of(context).primaryColor),
               )),
           child: Center(
@@ -56,16 +56,16 @@ class MainPageContainerColumnSet extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               left: BorderSide(
-                  width: r_bordersideAll[0] ? 1 : 0,
+                  width: bottom_bordersideAll[0] ? 1 : 0,
                   color: Theme.of(context).primaryColor),
               right: BorderSide(
-                  width: r_bordersideAll[1] ? 1 : 0,
+                  width: bottom_bordersideAll[1] ? 1 : 0,
                   color: Theme.of(context).primaryColor),
               top: BorderSide(
-                  width: r_bordersideAll[2] ? 1 : 0,
+                  width: bottom_bordersideAll[2] ? 1 : 0,
                   color: Theme.of(context).primaryColor),
               bottom: BorderSide(
-                  width: r_bordersideAll[3] ? 1 : 0,
+                  width: bottom_bordersideAll[3] ? 1 : 0,
                   color: Theme.of(context).primaryColor),
             ),
           ),
