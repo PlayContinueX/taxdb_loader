@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:taxdb_loader/drawer/custom_drawer.dart';
+import 'package:taxdb_loader/http/http_get.dart';
 import 'package:taxdb_loader/main/call_log_contents.dart';
 import 'package:taxdb_loader/main/call_memo_contents.dart';
 import 'package:taxdb_loader/main/mainContents.dart';
@@ -62,7 +63,9 @@ class MainApp extends StatelessWidget {
               alignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get_Http_Data();
+                  },
                   style: ButtonStyle(
                       foregroundColor: MaterialStateColor.resolveWith(
                           (states) => Colors.white),
