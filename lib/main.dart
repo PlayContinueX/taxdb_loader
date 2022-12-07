@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:taxdb_loader/drawer/custom_drawer.dart';
+import 'package:taxdb_loader/drawer/custom_enddrawer.dart';
 import 'package:taxdb_loader/http/http_get.dart';
 import 'package:taxdb_loader/main/call_log_contents.dart';
 import 'package:taxdb_loader/main/call_memo_contents.dart';
 import 'package:taxdb_loader/main/mainContents.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 bool isDarkMode = false;
 GetStorage getStoreage = GetStorage();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
@@ -28,6 +31,12 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: AppGlobalVariable.navigatorState,
+      localizationsDelegates: const [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ko', 'KR')],
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
@@ -44,19 +53,36 @@ class App extends StatelessWidget {
   }
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: const Text("Taxtis"),
           centerTitle: true,
+          leading: IconButton(
+              icon: const Icon(Icons.calendar_month),
+              onPressed: () {
+                if (scaffoldKey.currentState!.isDrawerOpen) {
+                  scaffoldKey.currentState!.closeDrawer();
+                } else {
+                  scaffoldKey.currentState!.openDrawer();
+                }
+              }),
         ),
         drawer: CustomDrawer(),
-        endDrawer: CustomDrawer(),
+        endDrawer: CustomEndDrawer(),
         body: Column(
           children: [
             ButtonBar(
@@ -64,7 +90,7 @@ class MainApp extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Get_Http_Data();
+                    Fetch_Data();
                   },
                   style: ButtonStyle(
                       foregroundColor: MaterialStateColor.resolveWith(

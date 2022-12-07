@@ -1,203 +1,117 @@
-// ignore_for_file: must_be_immutable
-
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:taxdb_loader/drawer/bussiness_category.dart';
-import 'package:taxdb_loader/main.dart';
-
-class ThemeSwitchController extends GetxController {
-  final RxBool _isDark = isDarkMode.obs;
-
-  Future<void> getChangeTheme(bool value) async {
-    _isDark.value = value;
-    Get.changeThemeMode(_isDark.value ? ThemeMode.dark : ThemeMode.light);
-    getStoreage.write('isDarkMode', _isDark.value);
-  }
-}
 
 class CustomDrawer extends StatelessWidget {
-  CustomDrawer({super.key});
-
-  ThemeSwitchController themeSwitchController =
-      Get.put(ThemeSwitchController());
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.5,
-      child: ScrollConfiguration(
-        behavior: const ScrollBehavior().copyWith(overscroll: false),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const ListTile(
-              title: Center(child: Text('Taxtis 메뉴')),
+      child: ListView(
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: const Text('A'),
+            accountEmail: const Text('abcdef@gmail.com'),
+            currentAccountPicture: Stack(
+              alignment: Alignment.center,
+              children: const [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.white,
+                ),
+                Text(
+                  'A',
+                  style: TextStyle(fontSize: 40),
+                ),
+              ],
             ),
-            Card(
-              child: ListTile(
-                title: const Text('설정'),
-                leading: const Icon(Icons.settings),
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+            decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                )),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              tileColor: Colors.amberAccent,
+              title: const Text('기간별 DB 조회'),
+              onTap: () {
+                Get.defaultDialog(
+                  title: '기간별 DB 조회',
+                  textConfirm: '적용 및 조회',
+                  onConfirm: () {},
+                  buttonColor: Theme.of(context).primaryColor,
+                  confirmTextColor: Colors.white,
+                  content: Container(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    child: Column(
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  children: [
-                                    const Text('관리자 전용'),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          Get.dialog(
-                                            AlertDialog(
-                                              title: const Text('업종별 DB 조회'),
-                                              content: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.5,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.5,
-                                                child: GridView.builder(
-                                                    gridDelegate:
-                                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount: 1,
-                                                      mainAxisSpacing: 10,
-                                                      crossAxisSpacing: 10,
-                                                      childAspectRatio: 3 / 0.6,
-                                                    ),
-                                                    itemCount:
-                                                        db_category.length,
-                                                    itemBuilder:
-                                                        ((context, index1) =>
-                                                            ElevatedButton(
-                                                              onPressed: (() {
-                                                                Get.back();
-                                                                Get.dialog(
-                                                                  AlertDialog(
-                                                                    title: const Text(
-                                                                        '업종별 DB 조회 2'),
-                                                                    content:
-                                                                        SizedBox(
-                                                                      width: MediaQuery.of(context)
-                                                                              .size
-                                                                              .width *
-                                                                          0.5,
-                                                                      height: MediaQuery.of(context)
-                                                                              .size
-                                                                              .height *
-                                                                          0.5,
-                                                                      child: GridView.builder(
-                                                                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                            crossAxisCount:
-                                                                                3,
-                                                                            mainAxisSpacing:
-                                                                                10,
-                                                                            crossAxisSpacing:
-                                                                                10,
-                                                                            childAspectRatio:
-                                                                                1 / 1,
-                                                                          ),
-                                                                          itemCount: db_category[index1].length,
-                                                                          itemBuilder: ((context, index2) => ElevatedButton(
-                                                                                onPressed: (() {
-                                                                                  Get.back();
-                                                                                  Get.dialog(
-                                                                                    AlertDialog(
-                                                                                      title: const Text('업종별 DB 조회 3'),
-                                                                                      content: SizedBox(
-                                                                                        width: MediaQuery.of(context).size.width * 0.5,
-                                                                                        height: MediaQuery.of(context).size.height * 0.5,
-                                                                                        child: GridView.builder(
-                                                                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                                              crossAxisCount: 3,
-                                                                                              mainAxisSpacing: 10,
-                                                                                              crossAxisSpacing: 10,
-                                                                                              childAspectRatio: 1 / 1,
-                                                                                            ),
-                                                                                            itemCount: db_category[index1]['lv1_category_list'][index2]['lv2_category_list'].length,
-                                                                                            itemBuilder: ((context, index3) => ElevatedButton(
-                                                                                                  onPressed: (() {}),
-                                                                                                  child: Text(db_category[index1]['lv1_category_list'][index2]['lv2_category_list'][index3]),
-                                                                                                ))),
-                                                                                      ),
-                                                                                      actions: [
-                                                                                        TextButton(
-                                                                                          child: const Text("Close"),
-                                                                                          onPressed: () => Get.back(),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  );
-                                                                                }),
-                                                                                child: Text(db_category[index1]['lv1_category_list'][index2]['lv2_category']),
-                                                                              ))),
-                                                                    ),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        child: const Text(
-                                                                            "Close"),
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Get.back(),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                              }),
-                                                              child: Text(
-                                                                  db_category[
-                                                                          index1]
-                                                                      [
-                                                                      'lv1_category']),
-                                                            ))),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  child: const Text("Close"),
-                                                  onPressed: () => Get.back(),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                        child: const Text('업종별 DB 조회')),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Text("다크모드"),
-                                    const SizedBox(width: 10),
-                                    Obx(() => Switch(
-                                          value: themeSwitchController
-                                              ._isDark.value,
-                                          onChanged: (value) async {
-                                            themeSwitchController
-                                                .getChangeTheme(value);
-                                          },
-                                        )),
-                                  ],
-                                ),
-                              ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.height * 0.15,
+                              child: DateTimePicker(
+                                initialValue: '',
+                                locale: const Locale('ko'),
+                                textAlign: TextAlign.center,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2024),
+                                onChanged: (val) => print(val),
+                              ),
                             ),
+                            const Text('   ~   '),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.height * 0.15,
+                              child: DateTimePicker(
+                                initialValue: '',
+                                locale: const Locale('ko'),
+                                textAlign: TextAlign.center,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2024),
+                                onChanged: (val) =>
+                                    print(val.replaceAll('-', '')),
+                              ),
+                            )
                           ],
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
+                        DropdownSearch<String>(
+                          popupProps: PopupProps.menu(
+                            showSelectedItems: true,
+                            disabledItemFn: (String s) => s.startsWith('I'),
+                          ),
+                          items: [
+                            "Brazil",
+                            "Italia (Disabled)",
+                            "Tunisia",
+                            'Canada'
+                          ],
+                          dropdownDecoratorProps: DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                              labelText: "Menu mode",
+                              hintText: "country in menu mode",
+                            ),
+                          ),
+                          onChanged: print,
+                          selectedItem: "Brazil",
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
